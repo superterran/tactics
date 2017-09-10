@@ -9,8 +9,8 @@ var engine = {
             hp: 50,
             str: 10,
             type: 'party',
-            skills: ['hit']
-            
+            skills: ['hit'],
+          
         },
 
         paula: {
@@ -46,9 +46,16 @@ var engine = {
     
 
     init: function(name) {
-        this.log('you step into battle.');
+        this.log('Tactics!')
+        this.log('========')   
+        this.log('usage exampe:')  
+        this.log('    engine.status() // shows stats of those in the arena ');   
+        this.log('    engine.do("ness", "hit", "1") // engine.do(src, verb, dest) ');   
+        this.log('______________________')   
+        this.log('you and your party step into battle.');
+        this.status();
         this.log('')   
-        this.status(false); 
+        this.check(false); 
     },
 
 
@@ -79,8 +86,8 @@ var engine = {
                 msg += ' and succceeds!';
                 this.log(msg)
                 this[verb](src, dest);
-                this.status()
-                return
+                this.check()
+                return;
             }
         }
 
@@ -100,13 +107,14 @@ var engine = {
         this.log(src + ' restored ' + dmg + ' hp to ' + dest + "!");
     },
 
-    status: function(next = true) {
+    check: function(next = true) {
         party = 0
         enemies = 0
         for(char in this.arena) {
             if(this.arena[char].hp < 0) {
                 delete this.arena[char];
                 this.log(char + ' has been killed!');
+                this.log('')  
             }
         }
 
@@ -117,12 +125,27 @@ var engine = {
 
 
         if(party == 0) this.log('the party was defeated and the enemies robbed them and dragged them back to the checkpoint!')
-        if(enemies == 0) this.log('the enemies were defeated!')
+        if(enemies == 0) {
+            this.log('the enemies were defeated!')
+            return false;
+        }
 
         if(next) this.next();
 
+        this.log('')  
         this.log("it's " + this.turn + "'s turn.")
         this.ai()
+
+    },
+
+    status: function() {
+        for(char in this.arena) {
+            msg = "";
+            if(this.arena[char].type == "party") msg += "* ";
+            msg += char + ": " + this.arena[char].hp + ' hp';
+           
+           this.log(msg);
+        }
 
     },
 
