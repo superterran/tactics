@@ -2,6 +2,8 @@ var engine = {
     
     battlelog: [],
 
+    turn: 'ness',
+
     arena: {
         ness: {
             hp: 50,
@@ -45,12 +47,18 @@ var engine = {
 
     init: function(name) {
         this.log('you step into battle.');
-        this.log('')    
+        this.log('')   
+        this.status(false); 
     },
 
 
     do: function(src, verb, dest) {
         
+        if(src != this.turn) {
+            this.log("it's not " + src + "'s turn!")
+            return;
+        }
+
         if(!this.arena[src]) {
             this.log(src + ' is not in this fight!')
             return;
@@ -71,8 +79,8 @@ var engine = {
                 msg += ' and succceeds!';
                 this.log(msg)
                 this[verb](src, dest);
-
-                return this.status();
+                this.status()
+                return
             }
         }
 
@@ -92,7 +100,7 @@ var engine = {
         this.log(src + ' restored ' + dmg + ' hp to ' + dest + "!");
     },
 
-    status: function() {
+    status: function(next = true) {
         party = 0
         enemies = 0
         for(char in this.arena) {
@@ -111,6 +119,46 @@ var engine = {
         if(party == 0) this.log('the party was defeated and the enemies robbed them and dragged them back to the checkpoint!')
         if(enemies == 0) this.log('the enemies were defeated!')
 
+        if(next) this.next();
+
+        this.log("it's " + this.turn + "'s turn.")
+        this.ai()
+
+    },
+
+    next: function() {
+        next = 0;
+        first = false;
+        for(char in this.arena) {
+            if(first === false) first = char;
+            if(next == 1) {
+                this.turn = char;
+
+                return;
+            }
+            if(this.turn == char) next = 1;
+        }
+        this.turn = first;
+
+    },
+
+    ai: function(log = true)
+    {
+
+        // let's determine if the computer should take this turn
+        if(this.arena[this.turn].type == 'enemy')
+        {
+            this.do(this.turn, 'hit', this.getRandom('party'))
+        }
+    },
+
+    getRandom: function(type = 'party') {
+        for(char in this.arena) {
+            if(this.arena[char].type == type) {
+                return char
+            }
+            return 'ness'
+        }
     },
 
     log: function(msg) {
