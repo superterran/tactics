@@ -80,12 +80,12 @@ var engine = {
             return; 
         }
 
-        msg = src + ' attempts to ' + verb + ' ' + dest + '... '
+        msg = src + ' tries to ' + verb + ' ' + dest + '... '
         match = 0;
         for(skill in skills) {
             if(skills[skill] == verb) {
                 match = 1;
-                msg += ' and succceeds!';
+                msg += ' and succeeds!';
                 this.log(msg)
                 this[verb](src, dest);
                 return this.check()
@@ -99,7 +99,7 @@ var engine = {
     hit: function(src, dest) {
         dmg = this.arena[src].str;
         this.arena[dest]['hp'] = this.arena[dest]['hp'] - dmg;
-        this.log(src + ' delievered ' + dmg + ' damage to ' + dest + "!");
+        this.log(src + ' delivered ' + dmg + ' damage to ' + dest + "!");
     },
 
     heal: function(src, dest) {
@@ -126,11 +126,11 @@ var engine = {
 
         $(".options").remove()
         if(party == 0) {
-            this.log('the party was defeated and the enemies robbed them and dragged them back to the checkpoint!')
+            this.log('the party was defeated! the enemies rob them and drag them back to the checkpoint!')
             return true;
         }
         if(enemies == 0) {
-            this.log('the enemies were defeated!')
+            this.log('the enemies were defeated, you have won!')
             return true;
         }
 
