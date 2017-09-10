@@ -2,11 +2,11 @@ var engine = {
     
     battlelog: [],
 
-    party: {
+    arena: {
         ness: {
             hp: 50,
             str: 10,
-            type: 'player',
+            type: 'party',
             skills: ['hit']
             
         },
@@ -14,7 +14,7 @@ var engine = {
         paula: {
             hp: 30,
             str: 8,
-            type: 'player',
+            type: 'party',
             skills: ['hit', 'heal']
         },
 
@@ -51,14 +51,14 @@ var engine = {
 
     do: function(src, verb, dest) {
         
-        if(!this.party[src]) {
+        if(!this.arena[src]) {
             this.log(src + ' is not in this fight!')
             return;
         }
 
-        skills = this.party[src]['skills'];
+        skills = this.arena[src]['skills'];
 
-        if(!this.party[dest]) {
+        if(!this.arena[dest]) {
             this.log(dest + ' is not in this fight!')
             return; 
         }
@@ -81,34 +81,34 @@ var engine = {
         this.log(msg);
     },
     hit: function(src, dest) {
-        dmg = this.party[src].str;
-        this.party[dest]['hp'] = this.party[dest]['hp'] - dmg;
+        dmg = this.arena[src].str;
+        this.arena[dest]['hp'] = this.arena[dest]['hp'] - dmg;
         this.log(src + ' delievered ' + dmg + ' damage to ' + dest + "!");
     },
 
     heal: function(src, dest) {
-        dmg = this.party[src].str;
-        this.party[dest]['hp'] = this.party[dest]['hp'] + dmg;
+        dmg = this.arena[src].str;
+        this.arena[dest]['hp'] = this.arena[dest]['hp'] + dmg;
         this.log(src + ' restored ' + dmg + ' hp to ' + dest + "!");
     },
 
     status: function() {
         party = 0
         enemies = 0
-        for(char in this.party) {
-            if(this.party[char].hp < 0) {
-                delete this.party[char];
+        for(char in this.arena) {
+            if(this.arena[char].hp < 0) {
+                delete this.arena[char];
                 this.log(char + ' has been killed!');
             }
         }
 
-        for(char in this.party) {
-            if(this.party[char].type == "player") player = 1;    
-            if(this.party[char].type == "enemy") enemies = 1;            
+        for(char in this.arena) {
+            if(this.arena[char].type == "party") party = 1;    
+            if(this.arena[char].type == "enemy") enemies = 1;            
         }
 
 
-        if(player == 0) this.log('the party was defeated and the enemies robbed them and dragged them back to the checkpoint!')
+        if(party == 0) this.log('the party was defeated and the enemies robbed them and dragged them back to the checkpoint!')
         if(enemies == 0) this.log('the enemies were defeated!')
 
     },
