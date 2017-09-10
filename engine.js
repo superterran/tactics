@@ -88,8 +88,7 @@ var engine = {
                 msg += ' and succceeds!';
                 this.log(msg)
                 this[verb](src, dest);
-                this.check()
-                return;
+                return this.check()
             }
         }
 
@@ -125,19 +124,22 @@ var engine = {
             if(this.arena[char].type == "enemy") enemies = 1;            
         }
 
-
-        if(party == 0) this.log('the party was defeated and the enemies robbed them and dragged them back to the checkpoint!')
+        $(".options").remove()
+        if(party == 0) {
+            this.log('the party was defeated and the enemies robbed them and dragged them back to the checkpoint!')
+            return true;
+        }
         if(enemies == 0) {
             this.log('the enemies were defeated!')
-            $(".options").remove()
-            return false;
+            return true;
         }
 
-        $(".options").remove()
         if(next) this.next();
 
         this.log('')  
         this.log("it's " + this.turn + "'s turn.")
+
+ 
         this.ai()
 
     },
@@ -176,7 +178,8 @@ var engine = {
         // let's determine if the computer should take this turn
         if(this.arena[this.turn].type == 'enemy')
         {
-            this.do(this.turn, 'hit', this.getRandom('party'))
+            this.obj.do(this.turn, 'hit', this.getRandom('party'))
+            $(".options").remove()
         }
     },
 

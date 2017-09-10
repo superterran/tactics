@@ -10,6 +10,7 @@ var arena = {
             player = document.createElement("div")
             $(player).addClass('character')
                 .addClass(char)
+                .addClass(engine.arena[char].type)
                 .attr('id', char)
 
             board = document.createElement("div")
@@ -21,10 +22,13 @@ var arena = {
             $(hp).addClass('hp').html(engine.arena[char].hp)
             $(player).append(hp)
 
-            $('#arena #'+engine.arena[char].type).append(player);
+            $('#arena').append(player);
         }
+       
 
         this.engine = engine;
+
+        this.positionCards();
         
         this.select(engine.turn)
         
@@ -33,14 +37,32 @@ var arena = {
         
     },
 
+    positionCards: function() {
 
-    select: function(char) {
+        offset = 220;
+        party_count = 0;
+        enemy_count = 0;
+        for(char in this.engine.arena) {
+            if(this.engine.arena[char].type == 'party') {
+                $('#'+char).animate({bottom: '0px'});
+                $('#'+char).animate({left: offset*party_count + 'px'});
+                party_count++;
+            } else {
+                $('#'+char).animate({top: '0px'});
+                $('#'+char).animate({left: offset*enemy_count + 'px'});
+                enemy_count++;
+            }
+        }
+
+    },
+
+    select: function(char, cont) {
         $('#' + char).addClass('active')
-        this.options(engine.turn)
+        if(!cont) this.options(engine.turn)
         this.update()
 
         $('#console').animate({
-            scrollTop: $('#console').get(0).scrollHeight}, 5000);
+            scrollTop: $('#console').get(0).scrollHeight}, 500);
     },
 
     update: function() {
@@ -76,8 +98,38 @@ var arena = {
         $('.options').remove()
         $('.active').removeClass('active')
         
-        this.engine.do(src, verb,dest);
-        this.select(this.engine.turn);
+        do_not_continue = this.engine.do(src, verb, dest);
+        this.animate(src, verb, dest);
+        this.select(this.engine.turn, do_not_continue);    
+ 
+    },
+
+    animate: function(src, verb, dest) {
+
+
+        original_y = $('#'+src).css('top')
+        original_x = $('#'+src).css('left')
+
+        if(verb == 'hit') {
+            $('#'+src).css('z-index', 999);
+
+            $('#'+src).animate(
+                {
+                    top: $('#'+dest).css('top'),
+                    left: $('#'+dest).css('left'),
+                    zIndex: 9999
+                }
+            )
+            .delay(100)
+            .animate(
+                {
+                    top: original_y,
+                    left: original_x,
+                    zIndex: 1
+                }
+            )
+        }
+        $('.options').remove()
 
     },
 
