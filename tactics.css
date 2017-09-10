@@ -4,38 +4,44 @@ body {
 }
 
 #arena {
-    background-color: black;
     display: block;
-    border: 1px solid red;
     width: 100%;
     height: 100%;
+    position: absolute;
 }
 
 #enemy {
-    border: 2px solid darkred;
     display: block;
-    clear: both;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    height: 30%;
 
 }
 
 #party {
-    border: 2px solid yellow;
     display: block;
     clear: both;
-    background-color: lightblue;
     bottom: 0px;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    height: 30%;
+    padding: 20px;
+
 }
 
 .character {
     opacity: .5;
-    width: 30%;
-    height: 30%;
-    border: 1px solid red;
+
+    border: 1px solid grey;
     float: left;
     background-color: grey;
     margin: 10px;
     background-size:cover;
     position: relative;
+    width: 30%;
+    height: 100%;
 }
 
 .character .hp {
@@ -100,4 +106,30 @@ body {
 
 .not-dead {
     opacity: 1;
+}
+
+.hp {
+    display: none;
+}
+.not-dead .hp {
+    display: block;
+}
+
+.active .not-dead .hp {
+    color: black;
+}
+
+#console {
+    border: 6px double dodgerblue;
+    display: block;
+    position: fixed;
+    top: 35%;
+    bottom: 35%;
+    left: 10px;
+    right: 10px;
+    white-space: pre-wrap;
+    font-family: monospace;
+    padding: 20px;
+    font-size: 12px;
+    overflow: hidden;
 }

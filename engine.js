@@ -2,22 +2,23 @@ var engine = {
     
     battlelog: [],
 
+    obj: false,
     turn: 'ness',
 
     arena: {
         ness: {
-            hp: 50,
-            str: 10,
+            hp: 11,
+            str: 7,
             type: 'party',
             skills: ['hit'],
           
         },
 
         paula: {
-            hp: 30,
+            hp: 10,
             str: 8,
             type: 'party',
-            skills: ['hit', 'heal']
+            skills: ['hit']
         },
 
         ganon: {
@@ -28,8 +29,8 @@ var engine = {
         },
 
         piggy: {
-            hp: 10,
-            str: 3,
+            hp: 15,
+            str: 5,
             type: 'enemy',
             skills: ['hit']
         },
@@ -46,12 +47,12 @@ var engine = {
     
 
     init: function(name) {
-        this.log('Tactics!')
-        this.log('========')   
-        this.log('usage exampe:')  
-        this.log('    engine.status() // shows stats of those in the arena ');   
-        this.log('    engine.do("ness", "hit", "1") // engine.do(src, verb, dest) ');   
-        this.log('______________________')   
+        this.log('Tactics!', 1)
+        this.log('========', 1)   
+        this.log('usage exampe:', 1)  
+        this.log('    engine.status() // shows stats of those in the arena ', 1);   
+        this.log('    engine.do("ness", "hit", "1") // engine.do(src, verb, dest) ', 1);   
+        this.log('______________________', 1)   
         this.log('you and your party step into battle.');
         this.status();
         this.log('')   
@@ -128,9 +129,11 @@ var engine = {
         if(party == 0) this.log('the party was defeated and the enemies robbed them and dragged them back to the checkpoint!')
         if(enemies == 0) {
             this.log('the enemies were defeated!')
+            $(".options").remove()
             return false;
         }
 
+        $(".options").remove()
         if(next) this.next();
 
         this.log('')  
@@ -145,7 +148,7 @@ var engine = {
             if(this.arena[char].type == "party") msg += "* ";
             msg += char + ": " + this.arena[char].hp + ' hp';
            
-           this.log(msg);
+           this.log(msg, 1);
         }
 
     },
@@ -169,7 +172,7 @@ var engine = {
 
     ai: function(log = true)
     {
-
+        $(".options").remove()
         // let's determine if the computer should take this turn
         if(this.arena[this.turn].type == 'enemy')
         {
@@ -186,8 +189,10 @@ var engine = {
         }
     },
 
-    log: function(msg) {
+    log: function(msg, consoleonly = false) {
         console.log(msg);
+        
+        if(!consoleonly) $('#console').append(msg+"\n");
         this.battlelog.push(msg);
     }
 };

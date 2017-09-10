@@ -4,8 +4,7 @@ var arena = {
 
     init: function(engine) {
 
-        engine.log('arena engaged!')
-
+        engine.obj = this
         for(char in engine.arena) {
 
             player = document.createElement("div")
@@ -26,7 +25,7 @@ var arena = {
         }
 
         this.engine = engine;
-
+        
         this.select(engine.turn)
         
 
@@ -39,6 +38,9 @@ var arena = {
         $('#' + char).addClass('active')
         this.options(engine.turn)
         this.update()
+
+        $('#console').animate({
+            scrollTop: $('#console').get(0).scrollHeight}, 5000);
     },
 
     update: function() {
@@ -47,7 +49,7 @@ var arena = {
    
             $('#'+char+' .hp').html(this.engine.arena[char].hp)
             $('#'+char).addClass('not-dead')
-                        
+
         }
 
     },
@@ -59,7 +61,7 @@ var arena = {
   
                 modal = document.createElement("div")
                 $(modal).addClass('modal').addClass('options')
-                .attr('id', 'src').html('boom')
+                .attr('id', 'src').html('SELECT')
                 .attr('onclick', 'arena.do("'+src+'", "hit", "'+char+'")')
 
                $('#'+char).append(modal);
