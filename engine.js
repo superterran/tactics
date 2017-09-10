@@ -20,21 +20,21 @@ var engine = {
             skills: ['hit', 'heal']
         },
 
-        1: {
+        ganon: {
             hp: 10,
             str: 3,
             type: 'enemy',
             skills: ['hit']
         },
 
-        2: {
+        piggy: {
             hp: 10,
             str: 3,
             type: 'enemy',
             skills: ['hit']
         },
 
-        3: {
+        bowser: {
             hp: 10,
             str: 3,   
             type: 'enemy',         
@@ -56,6 +56,7 @@ var engine = {
         this.status();
         this.log('')   
         this.check(false); 
+        return this;
     },
 
 
@@ -111,7 +112,7 @@ var engine = {
         party = 0
         enemies = 0
         for(char in this.arena) {
-            if(this.arena[char].hp < 0) {
+            if(this.arena[char].hp < 1) {
                 delete this.arena[char];
                 this.log(char + ' has been killed!');
                 this.log('')  
@@ -162,6 +163,7 @@ var engine = {
             if(this.turn == char) next = 1;
         }
         this.turn = first;
+        arena.select(this.turn)
 
     },
 

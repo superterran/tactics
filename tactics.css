@@ -11,8 +11,93 @@ body {
     height: 100%;
 }
 
-.char {
-    width: 100px;
-    height: 100px;
+#enemy {
+    border: 2px solid darkred;
+    display: block;
+    clear: both;
+
+}
+
+#party {
+    border: 2px solid yellow;
+    display: block;
+    clear: both;
+    background-color: lightblue;
+    bottom: 0px;
+}
+
+.character {
+    opacity: .5;
+    width: 30%;
+    height: 30%;
     border: 1px solid red;
+    float: left;
+    background-color: grey;
+    margin: 10px;
+    background-size:cover;
+    position: relative;
+}
+
+.character .hp {
+    color: white;
+    font-family: verdana;
+    font-size: 20pt;
+}
+.character .name {
+    display: block;
+    background-color: rgba(0,0,255,.7);
+    width: 100%;
+    padding: 20px 0 20px 0;
+    color: white;
+    font-family: verdana;
+    font-size: 20pt;
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.character.active {
+    background-color: white;
+}
+
+.character.ness {
+    background-image: url('https://vignette2.wikia.nocookie.net/earthbound/images/5/53/Ness_clay.png/revision/latest?cb=20140219060122');
+}
+
+.character.paula {
+    background-image: url('https://vignette1.wikia.nocookie.net/earthbound/images/9/9a/Paula_clay.png/revision/latest?cb=20140219060206');
+}
+
+.character.ganon {
+    background-image: url('https://vignette2.wikia.nocookie.net/zelda/images/3/3d/Ganon_%28Twilight_Princess%29.png/revision/latest?cb=20100105165825');
+}
+
+.character.bowser {
+    background-image: url('http://vignette2.wikia.nocookie.net/mario/images/6/6c/Bowser%2C_Super_Mario_64_DS.png/revision/latest?cb=20121106012958');
+}
+
+.character.piggy {
+    background-image: url('https://vignette1.wikia.nocookie.net/earthbound/images/b/b1/Pigmask_Clay.png/revision/latest?cb=20131203161933');
+}
+
+.modal {
+    margin: 20px;
+    background-color: rgba(255,0,0, .7);
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-family: verdana;
+}
+
+.modal .option {
+    display: block;
+    clear: both;
+    padding: 20px;
+}
+
+.not-dead {
+    opacity: 1;
 }
