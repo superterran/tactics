@@ -13,7 +13,7 @@ body {
 .character {
     opacity: .2;
 
-    border: 1px solid grey;
+    border: 5px solid grey;
     float: left;
     background-color: grey;
     margin: 10px;
@@ -28,10 +28,11 @@ body {
     color: white;
     font-family: verdana;
     font-size: 20pt;
+    padding: 10px;
 }
 .character .name {
     display: block;
-    background-color: rgba(0,0,255,.7);
+    background-color: rgba(128, 128, 128, .9);
     width: 100%;
     padding: 20px 0 20px 0;
     color: white;
@@ -43,15 +44,15 @@ body {
     text-transform: uppercase;
 }
 .party {
-    background-color: green;
+    background-color: dimgrey;
 }
 
 .enemy {
-    background-color: darkred;
+    background-color: black;
 }
 
 .character.active.party {
-    background-color: lightgreen;
+    background-color: lavender;
 }
 
 .character.ness {
